@@ -20,14 +20,17 @@ def opCodes(indata, index):
     elif val == 0x0006:
     elif val == 0x0007:
     elif val == 0x0008:
+	return "PHP	;[S]=P, S=S-1 (flags)"
     elif val == 0x0009:
-    elif val == 0x000a: 
+    elif val == 0x000a:
+	return "ASL A	;SHL A"
     elif val == 0x000b:
     elif val == 0x000c:
     elif val == 0x000d:
     elif val == 0x000e:
     elif val == 0x000f:
     elif val == 0x0010:
+	
     elif val == 0x0011:
     elif val == 0x0012:
         return "KIL"
@@ -37,6 +40,7 @@ def opCodes(indata, index):
     elif val == 0x0016:
     elif val == 0x0017:
     elif val == 0x0018:
+	return "CLC	;Clear carry flag"
     elif val == 0x0019:
     elif val == 0x001a:
         return "NOP"
@@ -51,14 +55,22 @@ def opCodes(indata, index):
         return "KIL"
     elif val == 0x0023:
     elif val == 0x0024:
+        index ++
+        return "BIT " + hex(indata[index]) + "    ;test and set flags"
     elif val == 0x0025:
     elif val == 0x0026:
     elif val == 0x0027:
     elif val == 0x0028:
+	return "PLP	;S=S+1, P=[s] (flags)"
     elif val == 0x0029:
     elif val == 0x002a:
+	return "ROL A	;RCL A"
     elif val == 0x002b:
     elif val == 0x002c:
+	index ++
+	val = hex(indata[index])
+	index ++
+	return "BIT " + val + hex(indata[index]) + "	;test and set flags" 
     elif val == 0x002d:
     elif val == 0x002e:
     elif val == 0x002f:
@@ -72,6 +84,7 @@ def opCodes(indata, index):
     elif val == 0x0036:
     elif val == 0x0037:
     elif val == 0x0038:
+	return "SEC	;Set carry flag"
     elif val == 0x0039:
     elif val == 0x003a:
         return "NOP"
@@ -81,6 +94,7 @@ def opCodes(indata, index):
     elif val == 0x003e:
     elif val == 0x003f:
     elif val == 0x0040:
+	return "RTI	;P=[S], PC=[S]"
     elif val == 0x0041:
     elif val == 0x0042:
         return "KIL"
@@ -90,8 +104,10 @@ def opCodes(indata, index):
     elif val == 0x0046:
     elif val == 0x0047:
     elif val == 0x0048:
+	return "PHA	;[S]=A, S=S-1 PUSH"
     elif val == 0x0049:
     elif val == 0x004a:
+	return "LSR A	;SHR A"
     elif val == 0x004b:
     elif val == 0x004c:
     elif val == 0x004d:
@@ -107,6 +123,7 @@ def opCodes(indata, index):
     elif val == 0x0056:
     elif val == 0x0057:
     elif val == 0x0058:
+	return "CLI	;Clear interrupt disable bit"
     elif val == 0x0059:
     elif val == 0x005a:
         return "NOP"
@@ -116,6 +133,7 @@ def opCodes(indata, index):
     elif val == 0x005e:
     elif val == 0x005f:
     elif val == 0x0060:
+	return "RTS	;PC=[S]+1"
     elif val == 0x0061:
     elif val == 0x0062:
         return "KIL"
@@ -125,8 +143,10 @@ def opCodes(indata, index):
     elif val == 0x0066:
     elif val == 0x0067:
     elif val == 0x0068:
+	return "PLA	;S=S+1, A=[S] POP"
     elif val == 0x0069:
     elif val == 0x006a:
+	return "ROR A	;RCR A"
     elif val == 0x006b:
     elif val == 0x006c:
     elif val == 0x006d:
@@ -142,9 +162,10 @@ def opCodes(indata, index):
     elif val == 0x0076:
     elif val == 0x0077:
     elif val == 0x0078:
+	return "SEI	;Set interrupt disable bit"
     elif val == 0x0079:
     elif val == 0x007a:
-        return "NOP"
+        return "NOP	;No operation"
     elif val == 0x007b:
     elif val == 0x007c:
     elif val == 0x007d:
@@ -159,9 +180,10 @@ def opCodes(indata, index):
     elif val == 0x0086:
     elif val == 0x0087:
     elif val == 0x0088:
+	return "DEY	;Y = Y-1"
     elif val == 0x0089:
     elif val == 0x008a:
-        return "TXA ;A=X"
+        return "TXA	;A=X"
     elif val == 0x008b:
     elif val == 0x008c:
     elif val == 0x008d:
@@ -177,10 +199,10 @@ def opCodes(indata, index):
     elif val == 0x0096:
     elif val == 0x0097:
     elif val == 0x0098:
-        return "TYA ;A=Y"
+        return "TYA	;A=Y"
     elif val == 0x0099:
     elif val == 0x009a:
-        return "TXS ;S=Y"
+        return "TXS	;S=Y"
     elif val == 0x009b:
     elif val == 0x009c:
     elif val == 0x009d:
@@ -228,6 +250,7 @@ def opCodes(indata, index):
     elif val == 0x00b6:
     elif val == 0x00b7:
     elif val == 0x00b8:
+	return "CLV	;Clear overflow flag"
     elif val == 0x00b9:
         index ++
         byte = hex(indata[index])
@@ -253,8 +276,10 @@ def opCodes(indata, index):
     elif val == 0x00c6:
     elif val == 0x00c7:
     elif val == 0x00c8:
+	return "INY	;Y = Y+1"
     elif val == 0x00c9:
     elif val == 0x00ca:
+	return "DEX	;X = X-1"
     elif val == 0x00cb:
     elif val == 0x00cc:
     elif val == 0x00cd:
@@ -270,8 +295,10 @@ def opCodes(indata, index):
     elif val == 0x00d6:
     elif val == 0x00d7:
     elif val == 0x00d8:
+	return "CLD	;Clear decimal mode"
     elif val == 0x00d9:
     elif val == 0x00da:
+	return "NOP	;No operation"
     elif val == 0x00db:
     elif val == 0x00dc:
     elif val == 0x00dd:
@@ -286,8 +313,10 @@ def opCodes(indata, index):
     elif val == 0x00e6:
     elif val == 0x00e7:
     elif val == 0x00e8:
+	return "INX	;X = X+1"
     elif val == 0x00e9:
     elif val == 0x00ea:
+	return "NOP	;No operation"
     elif val == 0x00eb:
     elif val == 0x00ec:
     elif val == 0x00ed:
@@ -303,8 +332,10 @@ def opCodes(indata, index):
     elif val == 0x00f6:
     elif val == 0x00f7:
     elif val == 0x00f8:
+	return "SED	;Set decimel mode"
     elif val == 0x00f9:
     elif val == 0x00fa:
+	return "NOP	;No operation"
     elif val == 0x00fb:
     elif val == 0x00fc:
     elif val == 0x00fd:
